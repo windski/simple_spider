@@ -17,7 +17,7 @@ def parse_context(context):
 
 
 def get_contextfrom_file():
-    with open(".\\test.html", "r", encoding='UTF-8') as f:
+    with open("./test.html", "r", encoding='UTF-8') as f:
         r = f.read()
 
     return r
