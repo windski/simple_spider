@@ -41,8 +41,24 @@ def parse_250_ranking(content):
     return name_list, img_list, content_list, next_url
 
 
-if __name__ == '__main__':
-    _, img, _, _ = parse_250_ranking(get_contextfrom_file())
+def parse_movie_profile(content) -> (str, list, list, list, str):
+    soup = BeautifulSoup(content, 'lxml')
+    name = soup.find('h1').span.contents
+    director = soup.find('span', class_='attrs').a.contents
+    stars = soup.find('strong', class_='ll rating_num').contents
+    details = soup.find('span', class_='all hidden').contents
+    spans = soup.find_all('span', class_='pl')
+    short_comments = spans[-5]
+    comments_link = short_comments.a['href']
 
-    print(img[0].split('.')[-1])
+    return name[0], stars, details, director, comments_link
+
+
+if __name__ == '__main__':
+    # _, img, _, _ = parse_250_ranking(get_contextfrom_file())
+
+    # print(img[0].split('.')[-1])
+
+    name, _, _, _, _ = parse_movie_profile(get_contextfrom_file())
+    print(name)
 
