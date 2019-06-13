@@ -105,3 +105,6 @@ venv.bak/
 
 # pycharm
 .idea/*
+
+# sqlite3
+*.sqlite3

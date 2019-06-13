@@ -10,6 +10,8 @@ def storage_file(filename, data):
     with open(abs_filename, 'wb') as f:
         f.write(data)
 
+    return abs_filename
+
 
 if __file__ == '__main__':
     storage_file()
