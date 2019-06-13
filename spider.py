@@ -1,33 +1,48 @@
 import requests
 import time
-from douban_parser import parse_250_ranking, parse_context
+from douban_parser import parse_250_ranking, parse_context, parse_movie_profile, parse_comments
 from storage_file import storage_file
-from connectdb import Ranking, create_session
+from connectdb import Ranking, MovieProfile, create_session
 
 url = "https://movie.douban.com/top250?start={}&filter="
-
+comments = 'https://movie.douban.com/subject/{}/comments?start={}&limit=20&sort=new_score&status=P'
 
 def get_img_data(urls: str):
-    time.sleep(1)
+    # time.sleep(1)
     r = requests.get(urls)
     return r.content
 
 
 def get_context(urls: str):
+    # time.sleep(1)
     r = requests.get(urls)
     return r.text
+
+
+def crawl_comments(id: str):
+    start_item = 0
+    page_item = 20
+
+    for _ in range(5):
+        r = requests.get(comments.format(id, start_item))
+        start_item += page_item
+        parse_comments(r.text)
 
 
 def commit_movie_profile(session, urls: list):
     for i in urls:
         content = get_context(i)
+        name, stars_list, details_list, director_list = parse_movie_profile(content)
+
+        profile = MovieProfile(name=name, details=details_list[0], stars=stars_list[0], director=director_list[0])
+        session.add(profile)
+
+    session.commit()
 
 
 if __name__ == '__main__':
     # create a connection with database
     session = create_session()
-    commit_movie_profile(session, ["https://movie.douban.com/subject/1292052/"])
-    exit(0)
     pages_item = 25
     start_item = 0
 

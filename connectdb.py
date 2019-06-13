@@ -56,6 +56,10 @@ class Comments(dbBase):
     date = Column(String(24), nullable=True)
     commentDetails = Column(String(512), nullable=False)
 
+    def __repe__(self):
+        return 'Comments, userName: {}, date: {}, commentDetails: {}'.format(self.__class__.userName,
+                                                                             self.__class__.date, self.__class__.commentDetails)
+
 
 if __name__ == '__main__':
     # For running it firstly

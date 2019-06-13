@@ -41,17 +41,38 @@ def parse_250_ranking(content):
     return name_list, img_list, content_list, next_url
 
 
-def parse_movie_profile(content) -> (str, list, list, list, str):
+def parse_movie_profile(content) -> (str, list, list, list):
     soup = BeautifulSoup(content, 'lxml')
     name = soup.find('h1').span.contents
     director = soup.find('span', class_='attrs').a.contents
     stars = soup.find('strong', class_='ll rating_num').contents
-    details = soup.find('span', class_='all hidden').contents
-    spans = soup.find_all('span', class_='pl')
-    short_comments = spans[-5]
-    comments_link = short_comments.a['href']
+    try:
+        details = soup.find('span', class_='short').span.contents
+    except AttributeError:
+        details = soup.find_all('div', class_='indent')[-1].span.contents
+    # details = soup.find('span', class_='all hidden').contents
 
-    return name[0], stars, details, director, comments_link
+    return name[0], stars, details, director
+
+
+def parse_comments(content):
+    soup = BeautifulSoup(content, 'lxml')
+
+    com = soup.find_all('div', class_='comment-item')
+
+    username = []
+    for i in com:
+        username.append(i.a['title'])
+
+    t = soup.find_all('span', class_='comment-time')
+    comment_time = []
+    for i in t:
+        comment_time.append(i.contents)
+
+    print(comment_time)
+
+    # print(username, com)
+
 
 
 if __name__ == '__main__':
@@ -59,6 +80,5 @@ if __name__ == '__main__':
 
     # print(img[0].split('.')[-1])
 
-    name, _, _, _, _ = parse_movie_profile(get_contextfrom_file())
-    print(name)
+    parse_comments(get_contextfrom_file())
 
