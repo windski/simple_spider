@@ -74,7 +74,6 @@ def parse_comments(content):
     # print(username, com)
 
 
-
 if __name__ == '__main__':
     # _, img, _, _ = parse_250_ranking(get_contextfrom_file())
 

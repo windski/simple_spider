@@ -7,6 +7,7 @@ from connectdb import Ranking, MovieProfile, create_session
 url = "https://movie.douban.com/top250?start={}&filter="
 comments = 'https://movie.douban.com/subject/{}/comments?start={}&limit=20&sort=new_score&status=P'
 
+
 def get_img_data(urls: str):
     # time.sleep(1)
     r = requests.get(urls)
