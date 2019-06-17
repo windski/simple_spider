@@ -1,7 +1,7 @@
 import os
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-data_dir = os.path.join(base_dir, 'data')
+data_dir = os.path.join(base_dir, 'app/static/data')
 
 
 def storage_file(filename, data):
@@ -10,8 +10,8 @@ def storage_file(filename, data):
     with open(abs_filename, 'wb') as f:
         f.write(data)
 
-    return abs_filename
+    return abs_filename.split('app')[-1]
 
 
-if __file__ == '__main__':
-    storage_file()
+if __name__ == '__main__':
+    print(storage_file('test', b'tset'))

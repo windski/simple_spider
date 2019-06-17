@@ -1,12 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>
+            Movie Ranking
+        </title>
 
-<h1>Hello world</h1>
+        <link href="{{ url_for('static', filename='css/heroic-features.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    </head>
 
-</body>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">Start Watching</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <header class="my-4">
+            </header>
+
+            <!-- Page Features -->
+            <div class="row text-center">
+
+
+                {% for rank in ranks.items %}
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="{{ rank.movieImgPath }}" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ rank.movieName }}</h4>
+                            <p class="card-text">{{ rank.movieDescription }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ url_for('main.details', mid=rank.id) }}" class="btn btn-primary">Find Out More!</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+        {% if ranks.has_prev %}
+            <a href="{{ url_for('main.index', page=ranks.prev_num) }}">&lt;&lt; Newer posts</a>
+        {% else %}
+            &lt;&lt; Newer posts
+        {% endif %} |
+
+        {% if ranks.has_next %}
+            <a href="{{ url_for('main.index', page=ranks.next_num) }}">Older posts &gt;&gt;</a>
+        {% else %}
+            Older posts &gt;&gt;
+        {% endif %}
+
+        <!-- Footer -->
+        <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; test 2019</p>
+        </div>
+        <!-- /.container -->
+        </footer>
+
+    </body>
+
 </html>

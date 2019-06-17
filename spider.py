@@ -48,7 +48,7 @@ if __name__ == '__main__':
     start_item = 0
 
     # get page content
-    for _ in range(10):
+    for _ in range(11):
         start_item += pages_item
         c = get_context(url.format(start_item))
         name, img, content, profile_url = parse_250_ranking(c)
