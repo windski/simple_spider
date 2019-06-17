@@ -3,7 +3,7 @@ from flask import render_template, session, redirect, url_for
 from . import main
 
 from .. import db
-from .. import connectdb
+from ..models import Ranking, MovieProfile
 
 
 @main.route('/', methods=['GET'])

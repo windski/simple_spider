@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import os
-from . import create_app, db
-from connectdb import Ranking, MovieProfile
+from app import create_app, db
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
