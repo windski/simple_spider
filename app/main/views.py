@@ -18,5 +18,6 @@ def index(page=1):
 @main.route('/details/<int:mid>', methods=['GET'])
 def details(mid):
     profile = MovieProfile.query.filter_by(id=mid).first()
+    rank = Ranking.query.filter_by(id=mid).first()
 
-    return render_template('details.html', profile=profile)
+    return render_template('details.html', profile=profile, rank=rank)
